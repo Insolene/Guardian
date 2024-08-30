@@ -16,38 +16,47 @@ namespace Guardian.Controllers
             _usersRepository = usersRepository;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<UserRepository>>> SearchAllUsers()
+        [HttpGet]   
+        public async Task<ActionResult<List<UserModel>>> SearchAllUsers()
         {
-            List<UserRepository> Users = await _usersRepository.SearchAllUsers();
+            List<UserModel> Users = await _usersRepository.SearchAllUsers();
             return Ok(Users);
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<UserRepository>>> SearchById(int id)
+        public async Task<ActionResult<List<UserModel>>> SearchById(int id)
         {
-            UserRepository Users = await _usersRepository.SearchById(id);
+            UserModel Users = await _usersRepository.SearchById(id);
             return Ok(Users);
         }
 
         [HttpPost]
-        public async Task<ActionResult<UserRepository>> Cadastrar([FromBody] UserRepository usersModel)
+        public async Task<ActionResult<UserModel>> Cadastrar([FromBody] UserModel usersModel)
         {
-            UserRepository users = await _usersRepository.Add(usersModel);
+            UserModel users = await _usersRepository.Add(usersModel);
             return Ok(users);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<UserRepository>> Update([FromBody] UserRepository usersModel, int id)
+        public async Task<ActionResult<UserModel>> Update([FromBody] UserModel usersModel, int id)
         {
-            UserRepository users = await _usersRepository.Update(usersModel, id);
+            UserModel users = await _usersRepository.Update(usersModel, id);
             return Ok(users);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<UserRepository>> Delete(int id)
+        public async Task<ActionResult<UserModel>> Delete(int id)
         {
             bool deleted = await _usersRepository.Delete(id);
             return Ok(deleted);
+        }
+
+        [HttpGet("{ImageRandom}")]
+        public IActionResult GetRandomImage()
+        {
+            // URL do serviço de imagens aleatórias
+            var randomImageUrl = "https://picsum.photos/id/1/200/300";
+
+            return Ok(new { imageUrl = randomImageUrl });
         }
     }
 }

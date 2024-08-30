@@ -12,11 +12,13 @@ namespace Guardian.Data
         {
 
         }
-        public DbSet<UserRepository> Users { get; set; }
+        public DbSet<UserModel> Users { get; set; }
+        public DbSet<ShelterModel> Shelters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder ModelBuilder)
         {
             ModelBuilder.ApplyConfiguration(new UserMap());
+            ModelBuilder.ApplyConfiguration(new ShelterMap());
             base.OnModelCreating(ModelBuilder);
         }
     }

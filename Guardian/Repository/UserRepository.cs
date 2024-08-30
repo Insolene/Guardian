@@ -12,25 +12,25 @@ namespace Guardian.Repository
         {
             _dbContext = guardianDB;
         }
-        public async Task<List<Models.UserRepository>> SearchAllUsers()
+        public async Task<List<Models.UserModel>> SearchAllUsers()
         {
             return await _dbContext.Users.ToListAsync();
         }
 
-        public async Task<Models.UserRepository> SearchById(int id)
+        public async Task<Models.UserModel> SearchById(int id)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
-        public async Task<Models.UserRepository> Add(Models.UserRepository user)
+        public async Task<Models.UserModel> Add(Models.UserModel user)
         {
            await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
 
             return user;
         }
-        public async Task<Models.UserRepository> Update(Models.UserRepository user, int id)
+        public async Task<Models.UserModel> Update(Models.UserModel user, int id)
         {
-            Models.UserRepository userbyId = await SearchById(id);
+            Models.UserModel userbyId = await SearchById(id);
 
             if (userbyId == null) 
             {
@@ -49,7 +49,7 @@ namespace Guardian.Repository
 
         public async Task<bool> Delete(int id)
         {
-            Models.UserRepository userbyId = await SearchById(id);
+            Models.UserModel userbyId = await SearchById(id);
 
             if (userbyId == null)
             {
