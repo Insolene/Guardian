@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Guardian.Models;
+using Guardian.Repository;
+using Guardian.Repository.Interface;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guardian.Controllers
@@ -7,11 +10,25 @@ namespace Guardian.Controllers
     [ApiController]
     public class SheltersController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<string> GetMapsLink()
+        private readonly IShelterRepository _shelterRepository;
+
+        public SheltersController(IShelterRepository shelterRepository)
         {
-            var mapsLink = "https://www.google.com/maps/@?api=1&map_action=map&center=-27.0999679604572%2C-48.91699220486182&zoom=15";
-            return Ok(mapsLink);
+            _shelterRepository = shelterRepository;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<ShelterModel>>> SearchAllShelter()
+        {
+            List<ShelterModel> shelter = await _shelterRepository.SearchAllShelter();
+            return Ok(shelter);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ShelterModel>> Cadastrar([FromBody] ShelterModel shelterModel) 
+        {
+            ShelterModel shelter = await _shelterRepository.Add(shelterModel);
+            return Ok(shelter);
         }
     }
 }

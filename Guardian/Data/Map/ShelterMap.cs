@@ -12,6 +12,8 @@ namespace Guardian.Data.Map
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Address).IsRequired().HasMaxLength(225);
             builder.Property(x => x.Phone).IsRequired().HasMaxLength(20);
+            builder.Property(x => x.Latitude).IsRequired();
+            builder.Property(x => x.Longitude).IsRequired();
                  
 
         }

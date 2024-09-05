@@ -24,6 +24,7 @@ namespace Guardian
                 );
 
             builder.Services.AddScoped<IUsersRepository, UserRepository>();
+            builder.Services.AddScoped<IShelterRepository, ShelterRepository>();   
 
             var app = builder.Build();
 
